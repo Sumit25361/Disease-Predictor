@@ -70,44 +70,45 @@ def health_check():
 
 @app.route('/api/register', methods=['POST'])
 def register():
-    data = request.json
-    if not data or not data.get('username') or not data.get('password'):
-        return jsonify({'message': 'Missing username or password'}), 400
+    data = request.get_json()
+    email = data.get('email')
+    password = data.get('password')
     
-    if users_collection.find_one({'username': data['username']}):
-        return jsonify({'message': 'User already exists'}), 400
+    if not email or not password:
+        return jsonify({"error": "Email and password are required"}), 400
+        
+    if users_collection.find_one({'email': email}):
+        return jsonify({"error": "Email already registered"}), 400
+        
+    hashed_password = generate_password_hash(password)
+    users_collection.insert_one({'email': email, 'password': hashed_password})
     
-    hashed_password = generate_password_hash(data['password'])
-    
-    new_user = {
-        'username': data['username'],
-        'password': hashed_password,
-        'created_at': datetime.datetime.utcnow()
-    }
-    
-    users_collection.insert_one(new_user)
-    return jsonify({'message': 'User created successfully'}), 201
+    return jsonify({"message": "User registered successfully"}), 201
 
 @app.route('/api/login', methods=['POST'])
 def login():
-    data = request.json
-    if not data or not data.get('username') or not data.get('password'):
-        return jsonify({'message': 'Missing data'}), 400
+    data = request.get_json()
+    email = data.get('email')
+    password = data.get('password')
     
-    user = users_collection.find_one({'username': data['username']})
-    
-    if not user:
-        return jsonify({'message': 'User not found'}), 404
+    if not email or not password:
+        return jsonify({"error": "Email and password are required"}), 400
         
-    if check_password_hash(user['password'], data['password']):
+    user = users_collection.find_one({'email': email})
+    
+    if user and check_password_hash(user['password'], password):
         token = jwt.encode({
             'user_id': str(user['_id']),
             'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=24)
-        }, app.config['SECRET_KEY'], algorithm="HS256")
+        }, app.config['SECRET_KEY'])
         
-        return jsonify({'token': token, 'username': user['username']})
+        return jsonify({
+            "token": token,
+            "email": email,
+            "message": "Login successful"
+        })
     
-    return jsonify({'message': 'Invalid password'}), 401
+    return jsonify({"error": "Invalid email or password"}), 401
 
 @app.route('/api/predict', methods=['POST'])
 @token_required

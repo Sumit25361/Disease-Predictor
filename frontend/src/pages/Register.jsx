@@ -3,7 +3,10 @@ import API from '../api';
 import { useNavigate, Link } from 'react-router-dom';
 
 const Register = () => {
-    const [formData, setFormData] = useState({ username: '', password: '' });
+    const [formData, setFormData] = useState({
+        email: '',
+        password: ''
+    });
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
@@ -15,30 +18,27 @@ const Register = () => {
         e.preventDefault();
         try {
             await API.post('/register', formData);
-            alert('Registration successful! Please login.');
             navigate('/login');
         } catch (err) {
-            setError(err.response?.data?.message || 'Registration failed');
+            setError(err.response?.data?.error || 'Registration failed');
         }
     };
 
     return (
         <div className="auth-container">
             <div className="auth-card">
-                <h2>Create Account</h2>
-                <p className="auth-subtitle">Sign up to get started</p>
-
-                {error && <div className="error-msg">{error}</div>}
-
+                <h2>Register</h2>
+                {error && <p className="error-msg">{error}</p>}
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
-                        <label>Username</label>
+                        <label>Email Address</label>
                         <input
-                            type="text"
-                            name="username"
+                            type="email"
+                            name="email"
+                            placeholder="Enter your email"
+                            value={formData.email}
                             onChange={handleChange}
                             required
-                            placeholder="Choose a username"
                         />
                     </div>
                     <div className="form-group">
@@ -46,15 +46,15 @@ const Register = () => {
                         <input
                             type="password"
                             name="password"
+                            placeholder="Enter your password"
+                            value={formData.password}
                             onChange={handleChange}
                             required
-                            placeholder="Create a strong password"
                         />
                     </div>
                     <button type="submit" className="btn btn-primary">Register</button>
                 </form>
-
-                <p className="auth-footer">
+                <p className="auth-link">
                     Already have an account? <Link to="/login">Login here</Link>
                 </p>
             </div>
