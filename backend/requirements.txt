@@ -1,0 +1,10 @@
+flask
+flask-cors
+pymongo
+scikit-learn
+pandas
+numpy
+PyJWT
+werkzeug
+Pillow
+gunicorn
