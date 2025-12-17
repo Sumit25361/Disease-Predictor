@@ -76,16 +76,21 @@ def health_check():
 def register():
     data = request.get_json()
     email = data.get('email')
+    username = data.get('username')
     password = data.get('password')
     
-    if not email or not password:
-        return jsonify({"error": "Email and password are required"}), 400
+    if not email or not username or not password:
+        return jsonify({"error": "Email, username, and password are required"}), 400
         
     if users_collection.find_one({'email': email}):
         return jsonify({"error": "Email already registered"}), 400
         
     hashed_password = generate_password_hash(password)
-    users_collection.insert_one({'email': email, 'password': hashed_password})
+    users_collection.insert_one({
+        'email': email, 
+        'username': username, 
+        'password': hashed_password
+    })
     
     return jsonify({"message": "User registered successfully"}), 201
 
@@ -109,6 +114,7 @@ def login():
         return jsonify({
             "token": token,
             "email": email,
+            "username": user.get('username', 'User'),
             "message": "Login successful"
         })
     
