@@ -27,7 +27,7 @@ const Home = () => {
     const [imagePreview, setImagePreview] = useState(null);
     const [imagePrediction, setImagePrediction] = useState(null);
 
-    const [activeTab, setActiveTab] = useState('symptoms');
+    const [activeTab, setActiveTab] = useState(null);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: parseInt(e.target.value) });
@@ -74,39 +74,85 @@ const Home = () => {
 
     return (
         <div className="container">
-            <h1>Disease Predictor</h1>
+            <div className="dashboard-header" style={{ textAlign: 'center', marginBottom: '3rem' }}>
+                <h1 style={{ fontSize: '2.5rem', color: 'var(--primary)', marginBottom: '0.5rem' }}>
+                    Welcome, {localStorage.getItem('username') || 'User'}
+                </h1>
+                <p style={{ fontSize: '1.2rem', color: '#666', maxWidth: '600px', margin: '0 auto' }}>
+                    Your AI-powered health assistant. Choose an option below to get started.
+                </p>
+            </div>
 
-            <div className="tabs" style={{ display: 'flex', gap: '1rem', marginBottom: '2rem', borderBottom: '1px solid #ddd' }}>
-                <button
+            {/* Dashboard Cards Navigation */}
+            <div className="dashboard-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '2rem', marginBottom: '3rem' }}>
+
+                {/* Symptom Checker Card */}
+                <div
                     onClick={() => setActiveTab('symptoms')}
-                    className={`tab-btn ${activeTab === 'symptoms' ? 'active' : ''}`}
+                    className={`feature-card ${activeTab === 'symptoms' ? 'active-card' : ''}`}
                     style={{
-                        padding: '1rem 2rem',
-                        background: 'none',
-                        border: 'none',
-                        borderBottom: activeTab === 'symptoms' ? '3px solid var(--primary)' : '3px solid transparent',
+                        padding: '2rem',
+                        borderRadius: '12px',
+                        backgroundColor: activeTab === 'symptoms' ? 'var(--primary)' : 'white',
+                        color: activeTab === 'symptoms' ? 'white' : '#333',
+                        boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
                         cursor: 'pointer',
-                        fontWeight: 'bold',
-                        color: activeTab === 'symptoms' ? 'var(--primary)' : '#666'
+                        transition: 'all 0.3s ease',
+                        border: '2px solid transparent',
+                        borderColor: activeTab === 'symptoms' ? 'var(--primary)' : 'transparent'
                     }}
                 >
-                    Symptom Checker
-                </button>
-                <button
+                    <div style={{ fontSize: '2rem', marginBottom: '1rem' }}>🩺</div>
+                    <h3 style={{ marginBottom: '0.5rem' }}>Symptom Checker</h3>
+                    <p style={{ fontSize: '0.9rem', opacity: 0.9 }}>
+                        Answer a few questions about how you feel to get an instant disease prediction.
+                    </p>
+                </div>
+
+                {/* Photo Diagnosis Card */}
+                <div
                     onClick={() => setActiveTab('photo')}
-                    className={`tab-btn ${activeTab === 'photo' ? 'active' : ''}`}
+                    className={`feature-card ${activeTab === 'photo' ? 'active-card' : ''}`}
                     style={{
-                        padding: '1rem 2rem',
-                        background: 'none',
-                        border: 'none',
-                        borderBottom: activeTab === 'photo' ? '3px solid var(--primary)' : '3px solid transparent',
+                        padding: '2rem',
+                        borderRadius: '12px',
+                        backgroundColor: activeTab === 'photo' ? 'var(--primary)' : 'white',
+                        color: activeTab === 'photo' ? 'white' : '#333',
+                        boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
                         cursor: 'pointer',
-                        fontWeight: 'bold',
-                        color: activeTab === 'photo' ? 'var(--primary)' : '#666'
+                        transition: 'all 0.3s ease',
+                        border: '2px solid transparent',
+                        borderColor: activeTab === 'photo' ? 'var(--primary)' : 'transparent'
                     }}
                 >
-                    Photo Diagnosis
-                </button>
+                    <div style={{ fontSize: '2rem', marginBottom: '1rem' }}>📸</div>
+                    <h3 style={{ marginBottom: '0.5rem' }}>Photo Diagnosis</h3>
+                    <p style={{ fontSize: '0.9rem', opacity: 0.9 }}>
+                        Upload a photo of a skin condition to get an AI analysis.
+                    </p>
+                </div>
+
+                {/* History Card */}
+                <div
+                    onClick={() => navigate('/history')}
+                    className="feature-card"
+                    style={{
+                        padding: '2rem',
+                        borderRadius: '12px',
+                        backgroundColor: 'white',
+                        color: '#333',
+                        boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+                        cursor: 'pointer',
+                        transition: 'all 0.3s ease',
+                        border: '2px solid transparent'
+                    }}
+                >
+                    <div style={{ fontSize: '2rem', marginBottom: '1rem' }}>📋</div>
+                    <h3 style={{ marginBottom: '0.5rem' }}>My History</h3>
+                    <p style={{ fontSize: '0.9rem', color: '#666' }}>
+                        View your past predictions and reports.
+                    </p>
+                </div>
             </div>
 
             {activeTab === 'symptoms' && (
@@ -255,6 +301,14 @@ const Home = () => {
             )}
 
             {error && <p className="error-msg" style={{ marginTop: '1rem' }}>{error}</p>}
+            {/* About Section */}
+            <div style={{ backgroundColor: '#f3f4f6', padding: '1.5rem', borderRadius: '8px', marginTop: '3rem', fontSize: '0.9rem', color: '#666', textAlign: 'center' }}>
+                <h4 style={{ margin: '0 0 0.5rem 0', color: '#4b5563' }}>ℹ️  About this App</h4>
+                <p style={{ margin: 0 }}>
+                    This application uses Machine Learning to assess symptoms and analyze skin images.
+                    It serves as a preliminary screening tool and is <strong>not a substitute for professional medical advice</strong>.
+                </p>
+            </div>
         </div>
     );
 };

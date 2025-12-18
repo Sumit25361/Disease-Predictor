@@ -26,6 +26,11 @@ const History = () => {
 
     return (
         <div className="container">
+            <div style={{ marginBottom: '1rem' }}>
+                <a href="/" onClick={(e) => { e.preventDefault(); window.location.href = '/'; }} style={{ textDecoration: 'none', color: '#666', display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer' }}>
+                    &larr; Back to Dashboard
+                </a>
+            </div>
             <h1>Patient History</h1>
             {history.length === 0 ? (
                 <p>No history found.</p>
