@@ -24,6 +24,7 @@ const Navbar = () => {
                 {token ? (
                     <>
                         <span className="navbar-item">Hello, {user}</span>
+                        <Link to="/history" className="navbar-item" style={{ marginRight: '1rem', textDecoration: 'none', color: '#333' }}>History</Link>
                         <button onClick={handleLogout} className="btn-logout">Logout</button>
                     </>
                 ) : (

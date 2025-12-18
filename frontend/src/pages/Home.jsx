@@ -177,8 +177,25 @@ const Home = () => {
                     </form>
 
                     {prediction && (
-                        <div className="prediction-result">
-                            <h3>Result: {prediction}</h3>
+                        <div className="prediction-report" style={{ marginTop: '2rem', padding: '1.5rem', border: '1px solid #ddd', borderRadius: '8px', backgroundColor: '#f9fafb' }}>
+                            <h3 style={{ borderBottom: '2px solid var(--primary)', paddingBottom: '0.5rem', marginBottom: '1rem' }}>Prediction Report</h3>
+                            <div style={{ display: 'grid', gap: '0.5rem' }}>
+                                <p><strong>Patient Name:</strong> {localStorage.getItem('username') || 'User'}</p>
+                                <p><strong>Date:</strong> {new Date().toLocaleDateString()}</p>
+                                <p><strong>Disease Predicted:</strong> <span style={{ color: 'var(--primary)', fontWeight: 'bold' }}>{prediction}</span></p>
+
+                                <h4 style={{ marginTop: '1rem', marginBottom: '0.5rem' }}>Symptoms Reported:</h4>
+                                <ul style={{ listStyle: 'none', padding: 0, display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '0.5rem' }}>
+                                    {Object.entries(formData).map(([key, value]) => (
+                                        <li key={key} style={{ padding: '0.5rem', backgroundColor: value === 1 ? '#e0f2fe' : '#f3f4f6', borderRadius: '4px', border: value === 1 ? '1px solid #7dd3fc' : '1px solid transparent' }}>
+                                            <span style={{ fontWeight: 500 }}>{key.replace(/_/g, ' ')}:</span> {value === 1 ? 'Yes' : 'No'}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                            <div style={{ marginTop: '1.5rem', display: 'flex', gap: '1rem' }}>
+                                <button onClick={() => window.print()} className="btn" style={{ backgroundColor: '#6b7280' }}>Print Report</button>
+                            </div>
                         </div>
                     )}
                 </div>
@@ -218,9 +235,20 @@ const Home = () => {
                     </div>
 
                     {imagePrediction && (
-                        <div className="prediction-result" style={{ borderLeftColor: '#10b981', backgroundColor: '#ecfdf5' }}>
-                            <h3>Detected Infection: {imagePrediction}</h3>
-                            <p style={{ fontSize: '0.9rem', color: '#666' }}>Note: This is an AI estimation. Please consult a doctor.</p>
+                        <div className="prediction-report" style={{ marginTop: '2rem', padding: '1.5rem', border: '1px solid #10b981', borderRadius: '8px', backgroundColor: '#ecfdf5' }}>
+                            <h3 style={{ borderBottom: '2px solid #10b981', paddingBottom: '0.5rem', marginBottom: '1rem' }}>Photo Diagnosis Report</h3>
+                            <div style={{ display: 'grid', gap: '0.5rem' }}>
+                                <p><strong>Patient Name:</strong> {localStorage.getItem('username') || 'User'}</p>
+                                <p><strong>Date:</strong> {new Date().toLocaleDateString()}</p>
+                                <p><strong>Detected Infection:</strong> <span style={{ color: '#059669', fontWeight: 'bold' }}>{imagePrediction}</span></p>
+
+                                <p style={{ marginTop: '1rem', fontStyle: 'italic', fontSize: '0.9rem', color: '#555' }}>
+                                    Note: This analysis is based on the uploaded image. Results are for informational purposes mainly.
+                                </p>
+                            </div>
+                            <div style={{ marginTop: '1.5rem', display: 'flex', gap: '1rem' }}>
+                                <button onClick={() => window.print()} className="btn" style={{ backgroundColor: '#6b7280' }}>Print Report</button>
+                            </div>
                         </div>
                     )}
                 </div>

@@ -216,6 +216,36 @@ def predict_image(current_user):
             'message': 'Image analyzed successfully'
         })
 
+@app.route('/api/history', methods=['GET'])
+@token_required
+def get_history(current_user):
+    try:
+        if db is None:
+             return jsonify([]), 200
+
+        user_id = str(current_user['_id'])
+        cursor = predictions_collection.find({'user_id': user_id}).sort('timestamp', -1)
+        
+        history = []
+        for doc in cursor:
+            record = {
+                'id': str(doc['_id']),
+                'timestamp': doc['timestamp'].isoformat(),
+                'type': doc.get('type', 'symptoms'), # 'symptoms' or 'image_prediction'
+                'prediction': doc['prediction']
+            }
+            if record['type'] == 'symptoms':
+                record['input'] = doc.get('input', {})
+            elif record['type'] == 'image_prediction':
+                record['filename'] = doc.get('filename', '')
+                
+            history.append(record)
+            
+        return jsonify(history)
+    except Exception as e:
+        print(f"Error fetching history: {e}")
+        return jsonify({"error": str(e)}), 500
+
 if __name__ == '__main__':
     # Ensure upload folder exists if we were saving
     # os.makedirs(os.path.join(app.root_path, 'uploads'), exist_ok=True)
