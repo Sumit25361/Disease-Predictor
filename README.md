@@ -2,6 +2,8 @@
 
 A full-stack AI-powered healthcare application that helps users identify potential diseases based on symptoms and skin images. This project combines Machine Learning with a modern web interface to provide preliminary health insights.
 
+### 🔗 [Live Demo](https://disease-predictor-ifnt.vercel.app/)
+
 ![Project Banner](https://via.placeholder.com/1000x300?text=AI+Medical+Disease+Predictor)
 
 ## ✨ Features
@@ -75,13 +77,8 @@ VITE_API_URL=http://localhost:5000/api
 ## 🌐 Deployment
 
 This project is ready for deployment!
-- **Frontend**: Vercel, Netlify, or Render.
-- **Backend**: Render, Heroku, or AWS.
+- **Frontend**: Vercel .
+- **Backend**: Render .
 
-*See `deployment_guide.md` in this repository for detailed deployment instructions.*
 
-## ⚠️ Disclaimer
-This application is for **educational purposes only**. It implies a preliminary check and is not a substitute for professional medical advice, diagnosis, or treatment. Always seek the advice of your physician.
 
-## 🤝 Contributing
-Contributions are welcome! Please feel free to submit a Pull Request.

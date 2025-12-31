@@ -19,6 +19,29 @@ You need to set the `VITE_API_URL` environment variable in your frontend hosting
    - **Value**: `https://your-backend-app.onrender.com/api`  <-- *Replace this with your ACTUAL backend URL set up on Render/Heroku*
 4. **Redeploy** your application (Environment variables only take effect after a new deployment).
 
+### ⚠️ IMPORTANT: Check "Root Directory" Setting (Vercel)
+If you still see **404 Not Found**, your Vercel project might be looking in the wrong folder.
+
+1.  Go to your **Project Dashboard** on Vercel.
+2.  Click the **Settings** tab at the top.
+3.  On the left sidebar, verify you are on **General**.
+4.  Scroll down to the section named **"Build & Development Settings"**.
+5.  Look for **Root Directory**.
+6.  Click "Edit" and set it to `frontend`.
+7.  **Save** the change.
+8.  **Redeploy** (See specific steps below).
+
+### How to Redeploy on Vercel
+1.  Click the **Deployments** tab at the top of your screen.
+2.  You will see a list of deployments. The top one is the latest.
+3.  On the far right of that row, click the **three dots (⋮)** icon.
+4.  Select **Redeploy** from the menu.
+5.  Click **Redeploy** again in the confirmation box.
+6.  Wait for the status to turn green ("Ready").
+
+> **Why?**
+> Changing settings (like Root Directory) doesn't work until the NEXT build. Redeploying forces that build to happen now.
+
 ### If using Render (for Frontend):
 1. Go to your Static Site "Environment" tab.
 2. Add Environment Variable:
