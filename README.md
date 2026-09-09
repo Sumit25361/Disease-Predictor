@@ -53,24 +53,18 @@ The **AI Medical Disease Predictor** is a modern full-stack healthcare applicati
 -   **Deployment:** Vercel (Frontend), Render (Backend)
 
 ## Setup Instructions
-1.  **Clone the Repository:**
-    ```bash
-    git clone https://github.com/Sumit25361/Disease-Predictor.git
-    cd Disease-Predictor
-    ```
-
-2.  **Backend Setup:**
+1.  **Backend Setup:**
     -   Navigate to the backend folder: `cd backend`
     -   Install dependencies: `pip install -r requirements.txt`
     -   Run the server: `python app.py`
 
-3.  **Frontend Setup:**
+2.  **Frontend Setup:**
     -   Navigate to the frontend folder: `cd frontend`
     -   Install dependencies: `npm install`
     -   Start the dev server: `npm run dev`
 
-4.  **Configuration:**
+3.  **Configuration:**
     -   Ensure MongoDB is running or update the connection string in `app.py`.
     -   Create a `.env` in frontend if you need to override the API URL.
 
-5.  **Access:** Open `http://localhost:5173` to use the application.
+4.  **Access:** Open `http://localhost:5173` to use the application.
